@@ -1,29 +1,59 @@
 <template>
-    <el-row type="flex" justify="space-between">
-        <el-col :span="3">
-            <a class="logo" href="#"></a>
-        </el-col>
-        <el-col :span="12">
-            <ul class="main-menu">
-                <li><a href="#">深度学习Demo</a></li>
-                <li><a href="#">前端Demo</a></li>
-            </ul>
-        </el-col>
-        <el-col :span="4">
-            <a @click="msg" class="reserve box foo">社交媒体</a>
-            <a class="reserve box foo">控制台</a>
-        </el-col>
-    </el-row>
+    <div>
+        <el-row type="flex" justify="space-between">
+            <el-col :span="3">
+                <a class="logo" href="#"></a>
+            </el-col>
+            <el-col :span="12">
+                <ul class="main-menu">
+                    <li><a @mouseover="dlMenuShow()" @mouseout="isDLMeuHide = true" href="#">深度学习Demo</a></li>
+                    <li><a @mouseover="webMenuShow()" @mouseout="isWebMeuHide = true" href="#">前端Demo</a></li>
+                </ul>
+            </el-col>
+            <el-col :span="4">
+                <a @click="msg" class="reserve box foo">社交媒体</a>
+                <router-link to="/" class="reserve box foo">控制台</router-link>
+            </el-col>
+        </el-row>
+        <div class="sub-menu">
+            <div :class="{ 'sub-menu-hide': isDLMeuHide }">
+                <ul>
+                    <li><router-link to="/">Style Transfer</router-link></li>
+                    <li><router-link to="/">Image Super Resolution</router-link></li>
+                </ul>
+            </div>
+            <div :class="{ 'sub-menu-hide': isWebMeuHide }">
+                <ul>
+                    <li><router-link to="/">Demo 1</router-link></li>
+                    <li><router-link to="/">Demo 2</router-link></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 </template>
 
 <script>
     export default {
       name: "AppHeader",
+      data() {
+        return {
+          isDLMeuHide: true,
+          isWebMeuHide: true
+        }
+      },
       methods: {
         msg: function () {
           alert("社交媒体");
-        }
+        },
+        dlMenuShow: function () {
+          this.isDLMeuHide = false;
+          this.isWebMeuHide = true;
+        },
+        webMenuShow: function () {
+          this.isWebMeuHide = false;
+          this.isDLMeuHide = true;
+        },
       }
     }
 </script>
@@ -126,5 +156,27 @@
     li a:hover {
         color: #333333;
         opacity: 0.5;
+    }
+    .sub-menu {
+        position: absolute;
+        width: 100%;
+    }
+    .sub-menu div {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        background-color: #F7F7F7;
+        transition: all 0.2s;
+        box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.1);
+    }
+    .sub-menu div:hover {
+        visibility: visible;
+    }
+    .sub-menu ul {
+        line-height: 0px;
+        margin: 0px;
+    }
+    .sub-menu-hide {
+        visibility: hidden;
     }
 </style>
